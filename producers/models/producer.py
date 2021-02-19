@@ -38,7 +38,7 @@ class Producer:
         #
         #
         self.broker_properties = {
-            # TODO
+            "bootstrap.servers" : "PLAINTEXT://kafka0:9092"
             # TODO
             # TODO
         }
