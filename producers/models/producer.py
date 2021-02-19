@@ -49,8 +49,13 @@ class Producer:
             Producer.existing_topics.add(self.topic_name)
 
         # TODO: Configure the AvroProducer
-        # self.producer = AvroProducer(
-        # )
+
+        schema_registry = CachedSchemaRegistryClient("http://schema-registry:8081/")
+
+        self.producer = AvroProducer(
+            {"bootstrap.servers" : "PLAINTEXT://kafka0:9092"}, 
+            schema_registry = schema_registry 
+        ) 
 
     def create_topic(self):
         """Creates the producer topic if it does not already exist"""
