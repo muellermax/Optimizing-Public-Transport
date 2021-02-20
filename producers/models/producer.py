@@ -64,14 +64,20 @@ class Producer:
         # TODO: Write code that creates the topic for this producer if it does not already exist on
         # the Kafka Broker.
         #
+        client = AdminClient({"bootstrap.servers": "PLAINTEXT://kafka0:9092"})
+        client.create_topics(
+            [NewTopic(topic=self.topic_name, num_partitions= self.num_partitions, replication_factor=self.num_replicas)]
+            )
         #
         logger.info("topic creation kafka integration incomplete - skipping")
 
-    def time_millis(self):
-        return int(round(time.time() * 1000))
+#    def time_millis(self):
+#        return int(round(time.time() * 1000))
 
     def close(self):
         """Prepares the producer for exit by cleaning up the producer"""
+
+        self.flush(timeout = 1)
         #
         #
         # TODO: Write cleanup code for the Producer here
