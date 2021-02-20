@@ -50,12 +50,10 @@ class Producer:
 
         # TODO: Configure the AvroProducer
 
-        schema_registry = CachedSchemaRegistryClient("http://schema-registry:8081/")
-
         self.producer = AvroProducer(
-            {"bootstrap.servers" : "PLAINTEXT://kafka0:9092"}, 
-            schema_registry = schema_registry 
-        ) 
+            {"bootstrap.servers" : "PLAINTEXT://kafka0:9092", 
+             'schema.registry.url': "http://schema-registry:8081/"} 
+        )
 
     def create_topic(self):
         """Creates the producer topic if it does not already exist"""
@@ -77,7 +75,7 @@ class Producer:
     def close(self):
         """Prepares the producer for exit by cleaning up the producer"""
 
-        self.flush(timeout = 1)
+        self.producer.flush()
         #
         #
         # TODO: Write cleanup code for the Producer here
